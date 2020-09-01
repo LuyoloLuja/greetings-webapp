@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greetings</title>
+    <link rel="stylesheet" href="CSS/stylesheet.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="form">
+            <h1>Greetings</h1>
+
+            <div class="textbox">
+                Name
+                <input class="theName" type="text" name="" value="" onfocus="this.value = ''">
+                <span class="counter">0</span>
+            </div>
+
+            <div class="radio">
+                <label class="">
+                    <input type="radio" name="language" class="languageType" value="english">
+                    <span class="">English</span>
+                </label>
+
+                <label class="">
+                    <input type="radio" name="language" class="languageType" value="afrikaans">
+                    <span class="">Afrikaans</span>
+                </label>
+
+                <label class="">
+                    <input type="radio" name="language" class="languageType" value="isixhosa">
+                    <span class="">IsiXhosa</span>
+                </label>
+            </div>
+
+            <button class="myButton" name="button" value="">Greet Me</button>
+            <button class="resetButton" name="button" value="">Reset</button>
+
+            <div class="greeting">
+            </div>
+        </div>
+    </div>
+
+    <script src="./factory-function/greet-factory.js"></script>
+    <script src="./JS/greet.js"></script>
+</body>
+
+</html>
