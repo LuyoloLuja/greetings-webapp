@@ -1,7 +1,11 @@
 module.exports = function GreetFactory(names) {
     var storedValues = names || {};
+    var userName = "";
 
-    async function userInput(userName, languageSelected) {
+    async function userInput(name, languageSelected) {
+
+        userName = name.toUpperCase().charAt(0) + userName.slice();
+
         if (languageSelected === "english") {
             return "Hi, " + userName + "!";
         } else if (languageSelected === "afrikaans") {
@@ -9,24 +13,13 @@ module.exports = function GreetFactory(names) {
         } else if (languageSelected === "isixhosa") {
             return "Molo, " + userName + "!";
         }
-    }
 
-    async function setNames(theName) {
-        if (theName) {
-            if (storedValues[theName] === undefined) {
-                storedValues[theName] = 0;
+        if (userName) {
+            if (storedValues[userName] === undefined) {
+                storedValues[userName] = 0;
             }
         }
-    }
 
-    async function errorHandler(username, language){
-      if(!username && !language){
-        return "Please enter your name and select a language!";
-      }else if(!username){
-        return "Please enter your name!";
-      }else if (!language) {
-        return "Please select a language!";
-      }
     }
 
     async function getNames() {
@@ -37,11 +30,21 @@ module.exports = function GreetFactory(names) {
         return Object.keys(storedValues).length;
     }
 
+    /*async function errorHandler(username, language){
+      if(!username && !language){
+        return "Please enter your name and select a language!";
+      }else if(!username){
+        return "Please enter your name!";
+      }else if (!language) {
+        return "Please select a language!";
+      }
+    }*/
+
     return {
         userInput,
-        setNames,
+    //    setNames,
         getCounter,
         getNames,
-        errorHandler
+    //    errorHandler
     }
 }
