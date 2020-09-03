@@ -1,7 +1,7 @@
 module.exports = function GreetFactory(names) {
     var storedValues = names || {};
 
-    function userInput(userName, languageSelected) {
+    async function userInput(userName, languageSelected) {
         if (languageSelected === "english") {
             return "Hi, " + userName + "!";
         } else if (languageSelected === "afrikaans") {
@@ -11,7 +11,7 @@ module.exports = function GreetFactory(names) {
         }
     }
 
-    function setNames(theName) {
+    async function setNames(theName) {
         if (theName) {
             if (storedValues[theName] === undefined) {
                 storedValues[theName] = 0;
@@ -19,7 +19,7 @@ module.exports = function GreetFactory(names) {
         }
     }
 
-    function errorHandler(username, language){
+    async function errorHandler(username, language){
       if(!username && !language){
         return "Please enter your name and select a language!";
       }else if(!username){
@@ -29,11 +29,11 @@ module.exports = function GreetFactory(names) {
       }
     }
 
-    function getNames() {
+    async function getNames() {
         return storedValues;
     }
 
-    function getCounter() {
+    async function getCounter() {
         return Object.keys(storedValues).length;
     }
 

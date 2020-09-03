@@ -27,8 +27,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 // my routes
-// rendering the index greetings handlebars template
-app.get('/', function(req, res){
+// rendering the home directory
+app.get('/', async function(req, res){
 	res.render('index');
 })
 
+// display names
+app.get('/greetings', async function(req, res){
+	res.send('Hello')
+})
