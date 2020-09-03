@@ -34,7 +34,14 @@ app.use(bodyParser.json());
 // my routes
 // rendering the home directory
 app.get('/', async function(req, res){
-	res.render('index');
+
+	let greetings = await greetingsFactory.userInput(enteredName, language);
+	let counter = await greetingsFactory.getCounter();
+
+	res.render('index', {
+		names: greetings.enteredName,
+		languages: greetings.language
+	});
 })
 
 // display names
@@ -43,12 +50,19 @@ app.post('/addNames', async function(req, res){
 	let enteredName = req.body.name;
 	let language = req.body.lang;
 
-
+	if (!enteredName) {
+		req.flash('error', 'Please enter your name!');
+	}else if (!language) {
+		req.flash('error', 'Please select a language!');
+	}else if (!enteredName && !language) {
+		req.flash('error', 'Please enter your name and select a language!')
+	}else {
+		let greetings = await greetingsFactory.userInput(enteredName, language);
+		let counter = await greetingsFactory.getCounter();
+	}
 
 	res.redirect('/');
 })
-
-
 
 // declaring my port number
 let PORT = process.env.PORT || 1997;
