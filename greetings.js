@@ -1,32 +1,36 @@
-module.exports = function GreetFactory(names) {
-    var storedValues = names || {};
-    var userName = "";
-
+module.exports = function GreetFactory() {
+    var storedValues = {};
+    // var userName = "";
+    
+    function setNames(name){
+        if(name){
+        // var userName = name.toUpperCase().charAt(0) + name.toLowerCase().slice();
+          if(storedValues[name] === undefined){
+            storedValues[name] = 0;
+          }
+        storedValues[name]++
+        }
+    }
+    
     function userInput(name, languageSelected) {
 
-        userName = name.toUpperCase().charAt(0) + name.slice();
+//   var userName = name.toUpperCase().charAt(0) + name.slice();
 
         if (languageSelected === "english") {
-            return "Hi, " + userName + "!";
+            return "Hi, " + name + "!";
         } else if (languageSelected === "afrikaans") {
-            return "More, " + userName + "!";
+            return "More, " + name + "!";
         } else if (languageSelected === "isixhosa") {
-            return "Molo, " + userName + "!";
-        }
-
-        if (userName) {
-            if (storedValues[userName] === undefined) {
-                storedValues[userName] = 0;
-            }
+            return "Molo, " + name + "!";
         }
 
     }
 
     function getNames() {
-        return storedValues;
+        return (storedValues);
     }
 
-    async function getCounter() {
+        function getCounter() {
         return Object.keys(storedValues).length;
     }
 
@@ -34,5 +38,6 @@ module.exports = function GreetFactory(names) {
         userInput,
         getCounter,
         getNames,
+        setNames
     }
 }

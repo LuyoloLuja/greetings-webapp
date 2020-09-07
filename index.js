@@ -42,11 +42,10 @@ app.get('/', function (req, res) {
 })
 
 // display names
-app.post('/greet', function (req, res) {
+app.post('/', function (req, res) {
 
 	let displayGreetings = req.body.name;
 	let language = req.body.language;
-	let namesCounter = req.body.counter;
 
 	// if (!displayGreetings) {
 	// 	req.flash('error', 'Please enter your name!');
@@ -55,19 +54,51 @@ app.post('/greet', function (req, res) {
 	// }else if (!displayGreetings && !language) {
 	// 	req.flash('error', 'Please enter your name and select a language!')
 	// }
+	greetingsFactory.setNames(displayGreetings)
 
 	let greetings = greetingsFactory.userInput(displayGreetings, language);
-	let counter = greetingsFactory.getCounter(namesCounter);
-
+	let counter = greetingsFactory.getCounter();
 
 	res.render('index', {
-		greet: greetingsFactory.userInput(displayGreetings, language),
-		count: greetingsFactory.getCounter()
+		greet: greetings,
+		count: counter
 	});
 })
+
+app.get('/greeted', function (req, res) {
+	// let counter = greetingsFactory.getCounter();
+	// greetingsFactory.setNames(name)
+	 console.log(greetingsFactory.getNames())
+	res.render('greeted', {
+		names: greetingsFactory.getNames()
+
+	});
+
+})
+
+app.get('/greeted/:type', function (req, res) {
+	var name = req.params.type
+	//  greetingsFactory.setNames(name)
+
+	// let counter = greetingsFactory.getCounter();
+	// console.log(greetingsFactory.getNames())
+	var namesList = greetingsFactory.getNames()
+	// console.log(namesList)
+	var sentence = 'You have greeted ' + namesList;
+	res.render('persons', {
+		times: sentence
+	})
+
+
+})
+
+
+
+
 
 // declaring my port number
 let PORT = process.env.PORT || 1997;
 app.listen(PORT, function () {
 	console.log('App started on port:', PORT);
 })
+

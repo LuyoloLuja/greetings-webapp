@@ -13,7 +13,7 @@
         <div class="form">
             <h1>Greetings</h1>
 
-            <form action="/greet" method="POST">
+            <form action="/" method="POST">
                 <div class="textbox">
                     Name
                     <input class="theName" type="text" name="name" value="" onfocus="this.value = ''">
@@ -38,7 +38,10 @@
                 </div>
 
                 <button class="myButton" type="submit" name="button" value="">Greet Me</button>
-                <button class="resetButton" name="button" value="">Reset</button>
+                <button class="resetButton" name="" type="submit" value="">Reset</button>
+
+
+                                            <a href="/greeted">greeted names</a>
 
                 <div class="greeting">
                     {{greet}}
