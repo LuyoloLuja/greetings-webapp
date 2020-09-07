@@ -1,10 +1,9 @@
 {
   "name": "greetings-webapp",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "keywords": [],
   "author": "",
@@ -15,5 +14,14 @@
     "express-flash": "0.0.2",
     "express-handlebars": "^5.1.0",
     "express-session": "^1.17.1"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LuyoloLuja/greetings-webapp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/LuyoloLuja/greetings-webapp/issues"
+  },
+  "homepage": "https://github.com/LuyoloLuja/greetings-webapp#readme",
+  "description": ""
 }
