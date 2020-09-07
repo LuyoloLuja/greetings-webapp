@@ -31,6 +31,7 @@ module.exports = function GreetFactory(names) {
     }
 
     /*async function errorHandler(username, language){
+
       if(!username && !language){
         return "Please enter your name and select a language!";
       }else if(!username){
@@ -38,6 +39,7 @@ module.exports = function GreetFactory(names) {
       }else if (!language) {
         return "Please select a language!";
       }
+      
     }*/
 
     return {
