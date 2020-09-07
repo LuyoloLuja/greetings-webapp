@@ -2,9 +2,9 @@ module.exports = function GreetFactory(names) {
     var storedValues = names || {};
     var userName = "";
 
-    async function userInput(name, languageSelected) {
+    function userInput(name, languageSelected) {
 
-        userName = name.toUpperCase().charAt(0) + userName.slice();
+        userName = name.toUpperCase().charAt(0) + name.slice();
 
         if (languageSelected === "english") {
             return "Hi, " + userName + "!";
@@ -22,7 +22,7 @@ module.exports = function GreetFactory(names) {
 
     }
 
-    async function getNames() {
+    function getNames() {
         return storedValues;
     }
 
@@ -30,23 +30,9 @@ module.exports = function GreetFactory(names) {
         return Object.keys(storedValues).length;
     }
 
-    /*async function errorHandler(username, language){
-
-      if(!username && !language){
-        return "Please enter your name and select a language!";
-      }else if(!username){
-        return "Please enter your name!";
-      }else if (!language) {
-        return "Please select a language!";
-      }
-      
-    }*/
-
     return {
         userInput,
-    //    setNames,
         getCounter,
         getNames,
-    //    errorHandler
     }
 }

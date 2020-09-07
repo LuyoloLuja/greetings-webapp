@@ -13,11 +13,11 @@
         <div class="form">
             <h1>Greetings</h1>
 
-            <form action="">
+            <form action="/greet" method="POST">
                 <div class="textbox">
                     Name
-                    <input class="theName" type="text" name="" value="" onfocus="this.value = ''">
-                    <span class="counter">0</span>
+                    <input class="theName" type="text" name="name" value="" onfocus="this.value = ''">
+                    <span class="counter">{{count}}</span>
                 </div>
 
                 <div class="radio">
@@ -37,17 +37,15 @@
                     </label>
                 </div>
 
-                <button class="myButton" name="button" value="">Greet Me</button>
+                <button class="myButton" type="submit" name="button" value="">Greet Me</button>
                 <button class="resetButton" name="button" value="">Reset</button>
 
                 <div class="greeting">
+                    {{greet}}
                 </div>
             </form>
         </div>
     </div>
-
-    <script src="./factory-function/greet-factory.js"></script>
-    <script src="./JS/greet.js"></script>
 </body>
 
 </html>
