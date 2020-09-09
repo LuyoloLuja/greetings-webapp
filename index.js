@@ -60,7 +60,6 @@ app.post('/', function (req, res) {
 
 app.get('/greeted', function (req, res) {
 
-	//console.log(greetingsFactory.getNames())
 	var greetedNames = greetingsFactory.getNames();
 
 	for(const list in greetedNames){
@@ -68,7 +67,6 @@ app.get('/greeted', function (req, res) {
 	}
 
 	res.render('greeted', {
-	//	greeted: greetingsFactory.getNames();
 		names: greetedNames
 	});
 })
