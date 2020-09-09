@@ -48,7 +48,44 @@ button {
     color: #2d545e;
     float: right;
 }
-.greeting {
-    clear: both;
-    padding: 8px;
+.greetings {
+    padding: 0;
+    margin: 0;
+    border: 4px solid #2d545e;
+    border-radius: 10%;
+    color: #2d545e;
+    width: 20%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 15px;
+}
+.greetings h1 {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 30px;
+    margin-bottom: 0;
+}
+.greetings ul {
+    padding: 20px;
+}
+.greetings ul li {
+    background-color: #2d545e;
+    list-style-type: none;
+    border-radius: 20px;
+    text-align: center;
+    padding: 10px;
+    margin: 20px;
+}
+.greetings ul li:hover {
+    background-color: #fff;
+    color: #2d545e;
+    border: 2px solid #2d545e;
+}
+.greetings a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #fff;
+    font-weight: bolder;
 }
