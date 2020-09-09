@@ -1,10 +1,10 @@
-<ul>
-    <a href="/greeted/:{{names}}">
-        <li>
-            {{#each names}}
-            {{@key}}
-            {{/each}}
-
-        </li>
-    </a>
-</ul>
+<div class="container">
+    <h1>Greeted Names</h1>
+    <ul>
+        {{#each names}}
+            <a href="/greeted">
+                <li>{{@this.key}}</li>
+            </a>
+        {{/each}}
+    </ul>
+</div>
