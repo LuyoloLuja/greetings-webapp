@@ -47,9 +47,9 @@ app.post('/', function (req, res) {
 	let displayGreetings = req.body.name;
 	let language = req.body.language;
 
-	greetingsFactory.setNames(displayGreetings)
-
+	
 	let greetings = greetingsFactory.userInput(displayGreetings, language);
+	greetingsFactory.setNames(displayGreetings)
 	let counter = greetingsFactory.getCounter();
 
 	res.render('index', {
@@ -71,13 +71,19 @@ app.get('/greeted', function (req, res) {
 	});
 })
 
-app.get('/greeted/:type', function (req, res) {
-	var name = req.params.type;
-	var namesList = greetingsFactory.getNames()
-	var sentence = 'You have greeted ' + namesList;
-
+// 
+app.get('/counter/:user_name', function (req, res) {
+	let name = req.params.user_name;
+	// console.log(name);
+	
+	let personGreeted = greetingsFactory.getNames();
+	let timesGreeted = greetingsFactory.getCounter();
+	
 	res.render('persons', {
-		times: sentence
+		count : greetingsFactory.userTotals(name),
+		name,
+		username: personGreeted,
+		times: timesGreeted
 	})
 })
 

@@ -27,6 +27,7 @@ module.exports = function GreetFactory() {
     }
 
     function getNames() {
+        // console.log(storedValues);
         return (storedValues);
     }
 
@@ -34,10 +35,21 @@ module.exports = function GreetFactory() {
         return Object.keys(storedValues).length;
     }
 
+    function userTotals(name){
+
+        for (var key in storedValues) {
+            if (key === name ) {
+                var num = storedValues[key];
+            }
+        }
+        return num ;
+    }
+
     return {
         userInput,
         getCounter,
         getNames,
-        setNames
+        setNames,
+        userTotals
     }
 }
