@@ -77,8 +77,7 @@ app.get('/greeted', function (req, res) {
 		names: greetedNames
 	});
 })
-
-// 
+// getting counter for each person greeted
 app.get('/counter/:user_name', function (req, res) {
 	let name = req.params.user_name;
 
