@@ -43,11 +43,16 @@ module.exports = function GreetFactory() {
         return num;
     }
 
+    function clearCounter(){
+        storedValues = "";
+    }
+
     return {
         userInput,
         getCounter,
         getNames,
         setNames,
-        userTotals
+        userTotals,
+        clearCounter
     }
 }

@@ -44,18 +44,31 @@ app.get('/', function (req, res) {
 // display names
 app.post('/', function (req, res) {
 
-	let displayGreetings = req.body.name;
+	let displayName = req.body.name;
 	let language = req.body.language;
 
 
-	let greetings = greetingsFactory.userInput(displayGreetings, language);
-	greetingsFactory.setNames(displayGreetings)
+	let greetings = greetingsFactory.userInput(displayName, language);
+	greetingsFactory.setNames(displayName)
 	let counter = greetingsFactory.getCounter();
 
-	res.render('index', {
-		greet: greetings,
-		count: counter
-	});
+	// let errorMessage = req.body.error;
+
+	if (!displayName) {
+		req.flash('error', 'Please enter your name!');
+	} else if (!language) {
+		req.flash('error', 'Please select a language of your choice!');
+	} else if (!displayName && !language) {
+		req.flash('error', 'Please enter your name and select a language!')
+	} else {
+		res.render('index', {
+			greet: greetings,
+			count: counter
+		});
+	}
+
+
+
 })
 
 app.get('/greeted', function (req, res) {
