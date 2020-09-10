@@ -47,12 +47,9 @@ app.post('/', function (req, res) {
 	let displayName = req.body.name;
 	let language = req.body.language;
 
-
 	let greetings = greetingsFactory.userInput(displayName, language);
 	greetingsFactory.setNames(displayName)
 	let counter = greetingsFactory.getCounter();
-
-	// let errorMessage = req.body.error;
 
 	if (!displayName) {
 		req.flash('error', 'Please enter your name!');
@@ -66,9 +63,6 @@ app.post('/', function (req, res) {
 			count: counter
 		});
 	}
-
-
-
 })
 
 app.get('/greeted', function (req, res) {
