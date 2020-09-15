@@ -47,15 +47,17 @@ app.post('/', function (req, res) {
 	let displayName = req.body.name;
 	let language = req.body.language;
 
-	let greetings = greetingsFactory.userInput(displayName, language);
-	greetingsFactory.setNames(displayName)
+	let username = displayName.toUpperCase().charAt(0) + displayName.slice();
+
+	let greetings = greetingsFactory.userInput(username, language);
+	greetingsFactory.setNames(username)
 	let counter = greetingsFactory.getCounter();
 
-	if (!displayName) {
+	if (!username) {
 		req.flash('error', 'Please enter your name!');
 	} else if (!language) {
 		req.flash('error', 'Please select a language of your choice!');
-	} else if (!displayName && !language) {
+	} else if (!username && !language) {
 		req.flash('error', 'Please enter your name and select a language!')
 	} else {
 		res.render('index', {
