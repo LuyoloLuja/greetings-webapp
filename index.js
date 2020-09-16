@@ -9,18 +9,19 @@ const session = require('express-session');
 const GreetingsFactory = require('./greetings');
 const greetingsFactory = GreetingsFactory();
 
-// initialise session middleware - flash-express depends on it
-app.use(session({
-	secret: "<add a secret string here>",
-	resave: false,
-	saveUninitialized: true
-}));
 // initialise the flash middleware
 app.use(flash());
 
 // configuring handlebars
 app.engine('handlebars', exhbs({ defaultLayout: 'main' }));
 app.set('view engine', 'handlebars');
+
+// initialise session middleware - flash-express depends on it
+app.use(session({
+	secret: "<add a secret string here>",
+	resave: false,
+	saveUninitialized: true
+}));
 
 // make public folder visible -- (a middleware)
 app.use(express.static('public'));
@@ -31,6 +32,11 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application / json
 app.use(bodyParser.json());
 
+// app.get('/', function (req, res) {
+//     res.render('index', {
+//       title: 'Home'
+//     })
+// })
 // my routes
 // rendering the home directory
 app.get('/', function (req, res) {
@@ -38,11 +44,12 @@ app.get('/', function (req, res) {
 	let counter = greetingsFactory.getCounter();
 
 	res.render('index', {
+		title: 'Home'
 	});
 })
 
 // display names
-app.post('/', function (req, res) {
+app.post('/greeting', function (req, res) {
 
 	let displayName = req.body.name;
 	let language = req.body.language;
@@ -53,18 +60,17 @@ app.post('/', function (req, res) {
 	greetingsFactory.setNames(username)
 	let counter = greetingsFactory.getCounter();
 
-	if (!username) {
+	if (!username && !language) {
+		req.flash('error', 'Please enter your name and select a language!')
+	}else if (!username) {
 		req.flash('error', 'Please enter your name!');
 	} else if (!language) {
 		req.flash('error', 'Please select a language of your choice!');
-	} else if (!username && !language) {
-		req.flash('error', 'Please enter your name and select a language!')
-	} else {
-		res.render('index', {
-			greet: greetings,
-			count: counter
-		});
 	}
+	res.render('index', {
+		greet: greetings,
+		count: counter
+	});
 })
 
 app.get('/greeted', function (req, res) {
