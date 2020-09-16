@@ -48,8 +48,8 @@ app.post('/greeting', function (req, res) {
 	let username = displayName.toUpperCase().charAt(0) + displayName.slice(1);
 
 	let greetings = greetingsFactory.userInput(username, language);
-	greetingsFactory.setNames(username)
-	let counter = greetingsFactory.getCounter();
+	greetingsFactory.setNames(username);
+	let counter = greetingsFactory.getCounter(username, language);
 
 	if (!username && !language) {
 		req.flash('error', 'Please enter your name and select a language!')

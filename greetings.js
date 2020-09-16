@@ -12,12 +12,14 @@ module.exports = function GreetFactory() {
 
     function userInput(name, languageSelected) {
 
-        if (languageSelected === "english") {
-            return "Hi, " + name + "!";
-        } else if (languageSelected === "afrikaans") {
-            return "More, " + name + "!";
-        } else if (languageSelected === "isixhosa") {
-            return "Molo, " + name + "!";
+        if(name && languageSelected){
+            if (languageSelected === "english") {
+                return "Hi, " + name + "!";
+            } else if (languageSelected === "afrikaans") {
+                return "More, " + name + "!";
+            } else if (languageSelected === "isixhosa") {
+                return "Molo, " + name + "!";
+            }
         }
     }
 
@@ -25,8 +27,10 @@ module.exports = function GreetFactory() {
         return (storedValues);
     }
 
-    function getCounter() {
-        return Object.keys(storedValues).length;
+    function getCounter(name, language) {
+        if(name && language){
+            return Object.keys(storedValues).length;
+        }
     }
 
     function userTotals(name) {
