@@ -32,16 +32,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application / json
 app.use(bodyParser.json());
 
-// app.get('/', function (req, res) {
-//     res.render('index', {
-//       title: 'Home'
-//     })
-// })
-// my routes
-// rendering the home directory
 app.get('/', function (req, res) {
-
-	let counter = greetingsFactory.getCounter();
 
 	res.render('index', {
 		title: 'Home'
@@ -54,7 +45,7 @@ app.post('/greeting', function (req, res) {
 	let displayName = req.body.name;
 	let language = req.body.language;
 
-	let username = displayName.toUpperCase().charAt(0) + displayName.slice();
+	let username = displayName.toUpperCase().charAt(0) + displayName.slice(1);
 
 	let greetings = greetingsFactory.userInput(username, language);
 	greetingsFactory.setNames(username)
