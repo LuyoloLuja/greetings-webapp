@@ -2,6 +2,7 @@ module.exports = function GreetFactory() {
     var storedValues = {};
 
     function setNames(name) {
+
         if (name) {
             if (storedValues[name] === undefined) {
                 storedValues[name] = 0;
@@ -12,13 +13,15 @@ module.exports = function GreetFactory() {
 
     function userInput(name, languageSelected) {
 
-        if(name && languageSelected){
+        var username = name.toUpperCase().charAt(0) + name.slice(1);
+
+        if(username && languageSelected){
             if (languageSelected === "english") {
-                return "Hi, " + name + "!";
+                return "Hi, " + username + "!";
             } else if (languageSelected === "afrikaans") {
-                return "More, " + name + "!";
+                return "More, " + username + "!";
             } else if (languageSelected === "isixhosa") {
-                return "Molo, " + name + "!";
+                return "Molo, " + username + "!";
             }
         }
     }
