@@ -36,7 +36,6 @@ app.use(bodyParser.json());
 
 app.get("/", function (req, res) {
 	res.render("index", {
-		title: "Home",
 	});
 });
 
@@ -81,6 +80,12 @@ app.get("/counter/:user_name", function (req, res) {
 		name,
 	});
 });
+
+app.post("/clear", function () {
+	greetingsFactory.clearCounter();
+
+	res.redirect("/");
+})
 
 // declaring my port number
 let PORT = process.env.PORT || 1997;
