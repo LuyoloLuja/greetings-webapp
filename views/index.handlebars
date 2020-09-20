@@ -1,15 +1,16 @@
 <div class="container">
     <div class="form">
         <h1>Greetings</h1>
+        <br>
 
         <form action="/greeting" method="POST">
             <div class="textbox">
                 <div class="error">
-                    <p>{{messages.error}}</p>
+                    {{messages.error}}
                 </div>
                 Name
                 <input class="theName" type="text" name="name" value="" onfocus="this.value = ''">
-                <span class="counter">{{count}}</span>
+                <span class="counter">Counter: {{count}}</span>
             </div>
 
             <div class="radio">
