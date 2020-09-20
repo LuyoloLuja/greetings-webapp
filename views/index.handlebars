@@ -11,6 +11,10 @@
                 Name
                 <input class="theName" type="text" name="name" value="" onfocus="this.value = ''">
                 <span class="counter">Counter: {{count}}</span>
+                
+                <div class="greeting">
+                    {{greet}}
+                </div>
             </div>
 
             <div class="radio">
@@ -32,11 +36,7 @@
 
             <button class="myButton" type="submit" name="button" value="">Greet Me</button>
             <button class="resetButton" name="reset" type="submit" value="">Reset</button>
-
-            <div class="greeting">
-                {{greet}}
-            </div>
-
+            <br>
             <div class="greetedLink">
                 <a href="/greeted">Greeted Names</a>
             </div>
