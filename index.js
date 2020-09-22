@@ -6,6 +6,10 @@ const exhbs = require("express-handlebars");
 const flash = require("express-flash");
 const session = require("express-session");
 
+// importing database middleware
+const pg = require('pg');
+// const Pool = pg.Pool()
+
 const GreetingsFactory = require("./greetings");
 const greetingsFactory = GreetingsFactory();
 
@@ -57,7 +61,7 @@ app.post("/greeting", function (req, res) {
 	}
 	res.render("index", {
 		greet: greetings,
-		count: counter,
+		timesGreeted: counter,
 	});
 });
 
@@ -73,11 +77,11 @@ app.get("/greeted", function (req, res) {
 });
 // getting counter for each person greeted
 app.get("/counter/:user_name", function (req, res) {
-	let name = req.params.user_name;
+	let username = req.params.user_name;
 
 	res.render("persons", {
-		count: greetingsFactory.userTotals(name),
-		name,
+		timesGreeted: greetingsFactory.userTotals(username),
+		username,
 	});
 });
 
