@@ -16,7 +16,7 @@ const pool = new Pool({
   });
 
 const GreetingsFactory = require("./greetings");
-const greetingsFactory = GreetingsFactory();
+const greetingsFactory = GreetingsFactory(pool);
 
 // initialise the flash middleware
 app.use(flash());
@@ -43,18 +43,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application / json
 app.use(bodyParser.json());
 
-app.get("/", function (req, res) {
+app.get("/", async function (req, res) {
 	res.render("index", {
 	});
 });
 
 // display names
-app.post("/greeting", function (req, res) {
+app.post("/greeting", async function (req, res) {
 	let displayName = req.body.name;
 	let language = req.body.language;
 
-	let greetings = greetingsFactory.userInput(displayName, language);
-	greetingsFactory.setNames(displayName);
+	await greetingsFactory.setNames(displayName);
+	let greetings = await greetingsFactory.userInput(displayName, language);
 	let counter = greetingsFactory.getCounter(displayName, language);
 
 	if (!displayName && !language) {
@@ -82,11 +82,11 @@ app.get("/greeted", function (req, res) {
 });
 // getting counter for each person greeted
 app.get("/counter/:user_name", function (req, res) {
-	let username = req.params.user_name;
+	let names = req.params.user_name;
 
 	res.render("persons", {
-		timesGreeted: greetingsFactory.userTotals(username),
-		username,
+		timesGreeted: greetingsFactory.userTotals(names),
+		names,
 	});
 });
 

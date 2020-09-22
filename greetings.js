@@ -1,17 +1,27 @@
-module.exports = function GreetFactory() {
+module.exports = function GreetFactory(pool) {
     var storedValues = {};
 
-    function setNames(name) {
+    async function setNames(name) {
 
         if (name) {
             if (storedValues[name] === undefined) {
                 storedValues[name] = 0;
+                var data = await pool.query('SELECT * FROM users WHERE names = $1', [name]);
+
+                if(data === 1){
+                    await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = $1', [name]);
+                }else {
+                    await pool.query('INSERT INTO users (names, timesGreeted) values ($1, $2)', [name, 1]);
+                }
+            }else{
+                await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = 1$', [name])
+
+                storedValues[name]++
             }
-            storedValues[name]++
         }
     }
 
-    function userInput(name, languageSelected) {
+    async function userInput(name, languageSelected) {
 
         var username = name.toUpperCase().charAt(0) + name.slice(1);
 
