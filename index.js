@@ -6,9 +6,14 @@ const exhbs = require("express-handlebars");
 const flash = require("express-flash");
 const session = require("express-session");
 
-// importing database middleware
 const pg = require('pg');
-// const Pool = pg.Pool()
+const Pool = pg.Pool;
+// database connection
+const connection = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/greetingsDB';
+
+const pool = new Pool({
+	connection
+  });
 
 const GreetingsFactory = require("./greetings");
 const greetingsFactory = GreetingsFactory();
