@@ -40,7 +40,7 @@ module.exports = function GreetFactory(pool) {
         return (storedValues);
     }
 
-    function getCounter(name, language) {
+    async function getCounter(name, language){
         if(name && language){
             return Object.keys(storedValues).length;
         }

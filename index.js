@@ -1,6 +1,6 @@
 // importing middleware
-let express = require("express");
-let app = express();
+const express = require("express");
+const app = express();
 const bodyParser = require("body-parser");
 const exhbs = require("express-handlebars");
 const flash = require("express-flash");
@@ -9,10 +9,10 @@ const session = require("express-session");
 const pg = require('pg');
 const Pool = pg.Pool;
 // database connection
-const connection = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost:5432/greetingsDB';
+const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost/greetingsDB';
 
 const pool = new Pool({
-	connection
+	connectionString
   });
 
 const GreetingsFactory = require("./greetings");
@@ -55,7 +55,7 @@ app.post("/greeting", async function (req, res) {
 
 	await greetingsFactory.setNames(displayName);
 	let greetings = await greetingsFactory.userInput(displayName, language);
-	let counter = greetingsFactory.getCounter(displayName, language);
+	let counter = await greetingsFactory.getCounter(displayName, language);
 
 	if (!displayName && !language) {
 		req.flash("error", "Please enter your name and select a language!");
