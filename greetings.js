@@ -36,7 +36,7 @@ module.exports = function GreetFactory(pool) {
         }
     }
 
-    function getNames() {
+    async function getNames() {
         return (storedValues);
     }
 
@@ -45,6 +45,15 @@ module.exports = function GreetFactory(pool) {
             return Object.keys(storedValues).length;
         }
     }
+
+    // async function getCounter() {
+        
+    //     var counter = await pool.query('SELECT COUNT(*) FROM users')
+    //     for (var i = 0; i < counter.rows.length; i++) {
+    //         var checkCount = counter.rows[i]
+    //     }
+    //     return checkCount.count
+    // }
 
     function userTotals(name) {
         for (var key in storedValues) {

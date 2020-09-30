@@ -70,8 +70,8 @@ app.post("/greeting", async function (req, res) {
 	});
 });
 
-app.get("/greeted", function (req, res) {
-	var greetedNames = greetingsFactory.getNames();
+app.get("/greeted", async function (req, res) {
+	var greetedNames = await greetingsFactory.getNames();
 
 	for (const list in greetedNames) {
 	}
