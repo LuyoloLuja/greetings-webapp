@@ -9,7 +9,7 @@ const session = require("express-session");
 const pg = require('pg');
 const Pool = pg.Pool;
 // database connection
-const connectionString = process.env.DATABASE_URL || 'postgresql://coder:pg123@localhost/greetingsDB';
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/greetingsDB';
 
 const pool = new Pool({
 	connectionString
@@ -43,7 +43,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application / json
 app.use(bodyParser.json());
 
-app.get("/", async function (req, res) {
+app.get("/", function (req, res) {
 	res.render("index", {
 	});
 });

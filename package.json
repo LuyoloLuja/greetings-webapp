@@ -25,5 +25,8 @@
     "url": "https://github.com/LuyoloLuja/greetings-webapp/issues"
   },
   "homepage": "https://github.com/LuyoloLuja/greetings-webapp#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "mocha": "^8.1.3"
+  }
 }

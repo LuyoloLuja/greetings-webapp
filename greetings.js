@@ -1,31 +1,11 @@
 module.exports = function GreetFactory(pool) {
     var storedValues = {};
 
-    async function setNames(name) {
-
-        if (name) {
-            if (storedValues[name] === undefined) {
-                storedValues[name] = 0;
-                var data = await pool.query('SELECT * FROM users WHERE names = $1', [name]);
-
-                if(data === 1){
-                    await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = $1', [name]);
-                }else {
-                    await pool.query('INSERT INTO users (names, timesGreeted) values ($1, $2)', [name, 1]);
-                }
-            }else{
-                await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = 1$', [name])
-
-                storedValues[name]++
-            }
-        }
-    }
-
-    async function userInput(name, languageSelected) {
+    function userInput(name, languageSelected) {
 
         var username = name.toUpperCase().charAt(0) + name.slice(1);
 
-        if(username && languageSelected){
+        if (username && languageSelected) {
             if (languageSelected === "english") {
                 return "Hi, " + username + "!";
             } else if (languageSelected === "afrikaans") {
@@ -35,25 +15,28 @@ module.exports = function GreetFactory(pool) {
             }
         }
     }
+    async function setNames(name) {
 
-    async function getNames() {
-        return (storedValues);
-    }
+        var setNames = await pool.query('SELECT names FROM users WHERE names = $1', [name]);
+        console.log(setNames.rowCount);
+        if (setNames.rowCount === 0) {
+            await pool.query('INSERT INTO users (names, timesGreeted) values ($1, $2)', [name, 1]);
 
-    async function getCounter(name, language){
-        if(name && language){
-            return Object.keys(storedValues).length;
+        } else {
+            await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = $1', [name]);
         }
+
     }
 
-    // async function getCounter() {
-        
-    //     var counter = await pool.query('SELECT COUNT(*) FROM users')
-    //     for (var i = 0; i < counter.rows.length; i++) {
-    //         var checkCount = counter.rows[i]
-    //     }
-    //     return checkCount.count
-    // }
+    async function getNames(name) {
+        let storedNames = await pool.query('SELECT * FROM users WHERE names = $1', [name]);
+        return storedNames;
+    }
+
+    async function getCounter() {
+        let counter = await pool.query('SELECT timesGreeted FROM users');
+        return counter.rowCount;
+    }
 
     function userTotals(name) {
         for (var key in storedValues) {
