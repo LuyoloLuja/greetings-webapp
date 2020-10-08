@@ -2,8 +2,8 @@
     <h1>Greeted Names</h1>
     <ul>
         {{#each names}}
-        <a href="/counter/{{@this.key}}">
-            <li>{{@this.key}}</li>
+        <a href="/counter/{{names}}">
+            <li>{{names}}</li>
         </a>
         {{/each}}
     </ul>

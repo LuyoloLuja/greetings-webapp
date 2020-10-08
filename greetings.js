@@ -1,5 +1,4 @@
 module.exports = function GreetFactory(pool) {
-    var storedValues = {};
 
     function userInput(name, languageSelected) {
 
@@ -15,22 +14,21 @@ module.exports = function GreetFactory(pool) {
             }
         }
     }
-    async function setNames(name) {
 
+    async function setNames(name) {
         var setNames = await pool.query('SELECT names FROM users WHERE names = $1', [name]);
-        console.log(setNames.rowCount);
+
         if (setNames.rowCount === 0) {
             await pool.query('INSERT INTO users (names, timesGreeted) values ($1, $2)', [name, 1]);
 
         } else {
             await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = $1', [name]);
         }
-
     }
 
-    async function getNames(name) {
-        let storedNames = await pool.query('SELECT * FROM users WHERE names = $1', [name]);
-        return storedNames;
+    async function getNames() {
+        let storedNames = await pool.query('SELECT names FROM users');
+        return storedNames.rows;
     }
 
     async function getCounter() {
@@ -38,17 +36,20 @@ module.exports = function GreetFactory(pool) {
         return counter.rowCount;
     }
 
-    function userTotals(name) {
-        for (var key in storedValues) {
-            if (key === name) {
-                var num = storedValues[key];
-            }
+    async function userTimesGreeted(name) {
+        let personCounter = await pool.query('SELECT timesGreeted FROM users WHERE names = $1', [name]);
+
+        if (personCounter.rowCount === 1) {
+            return personCounter.rows[0].timesgreeted;
+        } else {
+            return 0;
         }
-        return num;
+
     }
 
-    function clearCounter() {
-        storedValues = {};
+    async function clearCounter() {
+        let clearTable = await pool.query('DELETE FROM users');
+        return clearTable;
     }
 
     return {
@@ -56,7 +57,7 @@ module.exports = function GreetFactory(pool) {
         getCounter,
         getNames,
         setNames,
-        userTotals,
+        userTimesGreeted,
         clearCounter
     }
 }

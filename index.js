@@ -53,15 +53,17 @@ app.post("/greeting", async function (req, res) {
 	let displayName = req.body.name;
 	let language = req.body.language;
 
-	await greetingsFactory.setNames(displayName);
-	let greetings = await greetingsFactory.userInput(displayName, language);
-	let counter = await greetingsFactory.getCounter(displayName, language);
+	let enteredName = displayName.toUpperCase().charAt(0) + displayName.slice(1);
 
-	if (!displayName && !language) {
+	await greetingsFactory.setNames(enteredName);
+	let greetings = await greetingsFactory.userInput(enteredName, language);
+	let counter = await greetingsFactory.getCounter(enteredName, language);
+
+	if (!enteredName && !language) {
 		req.flash("error", "Please enter your name and select a language!");
-	} else if (!displayName) {
+	} else if (!enteredName) {
 		req.flash("error", "Please enter your name!");
-	} else if (!language) {
+	} else if (!enteredName) {
 		req.flash("error", "Please select a language of your choice!");
 	}
 	res.render("index", {
@@ -73,19 +75,16 @@ app.post("/greeting", async function (req, res) {
 app.get("/greeted", async function (req, res) {
 	var greetedNames = await greetingsFactory.getNames();
 
-	for (const list in greetedNames) {
-	}
-
 	res.render("greeted", {
-		names: greetedNames,
+		names: greetedNames
 	});
 });
 // getting counter for each person greeted
-app.get("/counter/:user_name", function (req, res) {
+app.get("/counter/:user_name", async function (req, res) {
 	let names = req.params.user_name;
 
 	res.render("persons", {
-		timesGreeted: greetingsFactory.userTotals(names),
+		timesGreeted: await greetingsFactory.userTimesGreeted(names),
 		names,
 	});
 });
