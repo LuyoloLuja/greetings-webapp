@@ -16,13 +16,15 @@ module.exports = function GreetFactory(pool) {
     }
 
     async function setNames(name) {
-        var setNames = await pool.query('SELECT names FROM users WHERE names = $1', [name]);
+        if (name) {
+            var setNames = await pool.query('SELECT names FROM users WHERE names = $1', [name]);
 
-        if (setNames.rowCount === 0) {
-            await pool.query('INSERT INTO users (names, timesGreeted) values ($1, $2)', [name, 1]);
+            if (setNames.rowCount === 0) {
+                await pool.query('INSERT INTO users (names, timesGreeted) values ($1, $2)', [name, 1]);
 
-        } else {
-            await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = $1', [name]);
+            } else {
+                await pool.query('UPDATE users names SET timesGreeted = timesGreeted + 1 WHERE names = $1', [name]);
+            }
         }
     }
 
@@ -44,12 +46,10 @@ module.exports = function GreetFactory(pool) {
         } else {
             return 0;
         }
-
     }
 
     async function clearCounter() {
-        let clearTable = await pool.query('DELETE FROM users');
-        return clearTable;
+        await pool.query('delete from users');
     }
 
     return {

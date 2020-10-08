@@ -53,17 +53,15 @@ app.post("/greeting", async function (req, res) {
 	let displayName = req.body.name;
 	let language = req.body.language;
 
-	let enteredName = displayName.toUpperCase().charAt(0) + displayName.slice(1);
+	await greetingsFactory.setNames(displayName);
+	let greetings = await greetingsFactory.userInput(displayName, language);
+	let counter = await greetingsFactory.getCounter(displayName, language);
 
-	await greetingsFactory.setNames(enteredName);
-	let greetings = await greetingsFactory.userInput(enteredName, language);
-	let counter = await greetingsFactory.getCounter(enteredName, language);
-
-	if (!enteredName && !language) {
+	if (!displayName && !language) {
 		req.flash("error", "Please enter your name and select a language!");
-	} else if (!enteredName) {
+	} else if (!displayName) {
 		req.flash("error", "Please enter your name!");
-	} else if (!enteredName) {
+	} else if (!displayName) {
 		req.flash("error", "Please select a language of your choice!");
 	}
 	res.render("index", {
@@ -89,8 +87,8 @@ app.get("/counter/:user_name", async function (req, res) {
 	});
 });
 
-app.post("/clear", function () {
-	greetingsFactory.clearCounter();
+app.get("/clear", async function (req, res) {
+	await greetingsFactory.clearCounter();
 
 	res.redirect("/");
 })
