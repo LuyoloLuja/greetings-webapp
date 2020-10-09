@@ -53,6 +53,8 @@ app.post("/greeting", async function (req, res) {
 	let displayName = req.body.name;
 	let language = req.body.language;
 
+	displayName = displayName.toLowerCase();
+
 	await greetingsFactory.setNames(displayName);
 	let greetings = await greetingsFactory.userInput(displayName, language);
 	let counter = await greetingsFactory.getCounter(displayName, language);
