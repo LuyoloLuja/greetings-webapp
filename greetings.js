@@ -34,7 +34,7 @@ module.exports = function GreetFactory(pool) {
     }
 
     async function getCounter() {
-        let counter = await pool.query('SELECT timesGreeted FROM users');
+        let counter = await pool.query('SELECT * FROM users');
         return counter.rowCount;
     }
 

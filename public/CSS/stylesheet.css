@@ -42,6 +42,7 @@ body {
 }
 button {
     border-radius: 5px;
+    text-decoration: none;
     border: none;
     padding: 10px;
     cursor: pointer;
