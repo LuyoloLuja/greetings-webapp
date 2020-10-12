@@ -13,7 +13,7 @@ const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@l
 
 const pool = new Pool({
 	connectionString
-  });
+});
 
 const GreetingsFactory = require("./greetings");
 const greetingsFactory = GreetingsFactory(pool);
@@ -50,26 +50,32 @@ app.get("/", function (req, res) {
 
 // display names
 app.post("/greeting", async function (req, res) {
-	let displayName = req.body.name;
-	let language = req.body.language;
+	try {
+		let displayName = req.body.name;
+		let language = req.body.language;
 
-	displayName = displayName.toLowerCase();
+		displayName = displayName.toLowerCase();
 
-	await greetingsFactory.setNames(displayName);
-	let greetings = await greetingsFactory.userInput(displayName, language);
-	let counter = await greetingsFactory.getCounter(displayName, language);
-
-	if (!displayName && !language) {
-		req.flash("error", "Please enter your name and select a language!");
-	} else if (!displayName) {
-		req.flash("error", "Please enter your name!");
-	} else if (!displayName) {
-		req.flash("error", "Please select a language of your choice!");
+		if (!displayName && !language) {
+			req.flash("error", "Please enter your name and select a language!");
+		} else if (!displayName) {
+			req.flash("error", "Please enter your name!");
+		} else if (!language) {
+			req.flash("error", "Please select a language of your choice!");
+		}
+		else if (displayName && language) {
+			await greetingsFactory.setNames(displayName);
+			var greetings = await greetingsFactory.userInput(displayName, language);
+			var counter = await greetingsFactory.getCounter(displayName, language);
+		}
+		res.render("index", {
+			greet: greetings,
+			timesGreeted: counter,
+		});
+	} catch (err) {
+		console.log(err)
 	}
-	res.render("index", {
-		greet: greetings,
-		timesGreeted: counter,
-	});
+
 });
 
 app.get("/greeted", async function (req, res) {

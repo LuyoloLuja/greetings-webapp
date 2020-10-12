@@ -16,6 +16,8 @@ module.exports = function GreetFactory(pool) {
     }
 
     async function setNames(name) {
+        name = name.toUpperCase().charAt(0) + name.slice(1);
+
         if (name) {
             var setNames = await pool.query('SELECT names FROM users WHERE names = $1', [name]);
 
