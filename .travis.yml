@@ -7,7 +7,7 @@ node_js:
   - "8.9.4"
 
 before_script:
-  - psql -c 'create database  greet_test_db;' -U postgres
+  - psql -c 'create database  greet_test_db' -U postgres
   - psql -U postgres -d greet_test_db -a -f table.sql
 
 services:
