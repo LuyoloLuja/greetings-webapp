@@ -72,12 +72,4 @@ describe("The Greet function", function () {
 
         assert.equal(5, await greetings.userTimesGreeted('Luyolo'));
     })
-
-    it('Should add names on the database', async function () {
-        let greetings = Greetings(pool);
-
-        await greetings.setNames(['Luyolo', 'Cairo', 'Simthe']);
-
-        assert.equal(['Luyolo', 'Cairo', 'Simthe'], await greetings.getNames());
-    })
 })
