@@ -40,7 +40,7 @@ body {
 .radio label {
     margin: 5px;
 }
-button {
+button, .reset {
     border-radius: 5px;
     text-decoration: none;
     border: none;
