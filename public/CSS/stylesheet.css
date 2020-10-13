@@ -40,8 +40,13 @@ body {
 .radio label {
     margin: 5px;
 }
+button {
+    float: left;
+}
 button, .reset {
+    clear: both;
     border-radius: 5px;
+    display: inline-block;
     text-decoration: none;
     border: none;
     padding: 10px;
@@ -50,15 +55,17 @@ button, .reset {
     background-color: #fff;
     font-size: inherit;
     color: #2d545e;
-    float: right;
+}
+.greetedLink  {
+    background-color: #fff;
+    display: inline-block;
+    padding: 10px;
+    font-size: inherit;
+    border-radius: 5px;
 }
 .greetedLink a {
     text-decoration: none;
     color: #2d545e;
-    background-color: #fff;
-    padding: 10px;
-    font-size: inherit;
-    border-radius: 5px;
 }
 .greetings {
     padding: 0;
