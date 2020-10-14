@@ -50,7 +50,6 @@ module.exports = function Routes() {
 
     async function counterForOne(req, res) {
         let names = req.params.user_name;
-
         res.render("persons", {
             timesGreeted: await greetingsFactory.userTimesGreeted(names),
             names,

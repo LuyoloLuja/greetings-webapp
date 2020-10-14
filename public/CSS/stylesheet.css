@@ -27,7 +27,7 @@ body {
     margin: 15px;
 }
 .textbox input {
-    width: 18em;
+    width: 17em;
     border: none;
     border-radius: 5px;
     outline: none;
@@ -55,7 +55,6 @@ button, .reset {
     background-color: #fff;
     font-size: inherit;
     color: #2d545e;
-    /* float: right; */
 }
 .greetedLink  {
     background-color: #fff;
