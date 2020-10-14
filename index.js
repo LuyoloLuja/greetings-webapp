@@ -1,14 +1,12 @@
-// importing middleware
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const exhbs = require("express-handlebars");
 const flash = require("express-flash");
 const session = require("express-session");
-
 const pg = require('pg');
 const Pool = pg.Pool;
-// database connection
+
 const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/greetingsDB';
 
 const pool = new Pool({
@@ -18,7 +16,9 @@ const pool = new Pool({
 const GreetingsFactory = require("./greetings");
 const greetingsFactory = GreetingsFactory(pool);
 
-// initialise the flash middleware
+const Routes = require("./routes-factory");
+const routes = Routes();
+
 app.use(flash());
 
 // configuring handlebars
@@ -34,74 +34,18 @@ app.use(
 	})
 );
 
-// make public folder visible -- (a middleware)
+// make public folder visible
 app.use(express.static("public"));
-
-// parse appliction
 app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application / json
 app.use(bodyParser.json());
 
-app.get("/", function (req, res) {
-	res.render("index", {
-	});
-});
+// routes
+app.get("/", routes.renderHome());
+app.post("/greeting", routes.displayUserInput());
+app.get("/greeted", routes.greetedNames());
+app.get("/counter/:user_name", routes.counterForOne());
+app.get("/clear", routes.resetButton())
 
-// display names
-app.post("/greeting", async function (req, res) {
-	try {
-		let displayName = req.body.name;
-		let language = req.body.language;
-
-		displayName = displayName.toLowerCase();
-
-		if (!displayName && !language) {
-			req.flash("error", "Please enter your name and select a language!");
-		} else if (!displayName) {
-			req.flash("error", "Please enter your name!");
-		} else if (!language) {
-			req.flash("error", "Please select a language of your choice!");
-		}
-		else if (displayName && language) {
-			await greetingsFactory.setNames(displayName);
-			var greetings = await greetingsFactory.userInput(displayName, language);
-			var counter = await greetingsFactory.getCounter(displayName, language);
-		}
-		res.render("index", {
-			greet: greetings,
-			timesGreeted: counter,
-		});
-	} catch (err) {
-		console.log(err)
-	}
-
-});
-
-app.get("/greeted", async function (req, res) {
-	var greetedNames = await greetingsFactory.getNames();
-
-	res.render("greeted", {
-		names: greetedNames
-	});
-});
-// getting counter for each person greeted
-app.get("/counter/:user_name", async function (req, res) {
-	let names = req.params.user_name;
-
-	res.render("persons", {
-		timesGreeted: await greetingsFactory.userTimesGreeted(names),
-		names,
-	});
-});
-
-app.get("/clear", async function (req, res) {
-	await greetingsFactory.clearCounter();
-
-	res.redirect("/");
-})
-
-// declaring my port number
 let PORT = process.env.PORT || 1997;
 app.listen(PORT, function () {
 	console.log("App started on port:", PORT);
