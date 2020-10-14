@@ -4,17 +4,6 @@ const bodyParser = require("body-parser");
 const exhbs = require("express-handlebars");
 const flash = require("express-flash");
 const session = require("express-session");
-const pg = require('pg');
-const Pool = pg.Pool;
-
-const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/greetingsDB';
-
-const pool = new Pool({
-	connectionString
-});
-
-const GreetingsFactory = require("./greetings");
-const greetingsFactory = GreetingsFactory(pool);
 
 const Routes = require("./routes-factory");
 const routes = Routes();
@@ -40,11 +29,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // routes
-app.get("/", routes.renderHome());
-app.post("/greeting", routes.displayUserInput());
-app.get("/greeted", routes.greetedNames());
-app.get("/counter/:user_name", routes.counterForOne());
-app.get("/clear", routes.resetButton())
+app.get("/", routes.renderHome);
+app.post("/greeting", routes.displayUserInput);
+app.get("/greeted", routes.greetedNames);
+app.get("/counter/:user_name", routes.counterForOne);
+app.get("/clear", routes.resetButton);
 
 let PORT = process.env.PORT || 1997;
 app.listen(PORT, function () {

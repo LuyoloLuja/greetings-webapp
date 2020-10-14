@@ -1,5 +1,13 @@
-module.exports = function routes() {
-    // app.use(bodyParser.urlencoded({ extended: false }));
+module.exports = function Routes() {
+    const pg = require('pg');
+    const Pool = pg.Pool;
+
+    const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/greetingsDB';
+    const pool = new Pool({
+        connectionString
+    });
+    const GreetingsFactory = require("./greetings");
+    const greetingsFactory = GreetingsFactory(pool);
 
     async function renderHome(req, res) {
         res.render("index");
@@ -7,31 +15,29 @@ module.exports = function routes() {
 
     async function displayUserInput(req, res) {
 
-        try {
-            let displayName = req.body.name;
-            let language = req.body.language;
+        let displayName = req.body.name;
+        let language = req.body.language;
 
-            displayName = displayName.toLowerCase();
+        displayName = displayName.toLowerCase();
 
-            if (!displayName && !language) {
-                req.flash("error", "Please enter your name and select a language!");
-            } else if (!displayName) {
-                req.flash("error", "Please enter your name!");
-            } else if (!language) {
-                req.flash("error", "Please select a language of your choice!");
-            }
-            else if (displayName && language) {
-                await greetingsFactory.setNames(displayName);
-                var greetings = await greetingsFactory.userInput(displayName, language);
-                var counter = await greetingsFactory.getCounter(displayName, language);
-            }
-            res.render("index", {
-                greet: greetings,
-                timesGreeted: counter,
-            });
-        } catch (err) {
-            console.log(err)
+        if (!displayName && !language) {
+            req.flash("error", "Please enter your name and select a language!");
+        } else if (!displayName) {
+            req.flash("error", "Please enter your name!");
+        } else if (!language) {
+            req.flash("error", "Please select a language of your choice!");
         }
+        else if (displayName && language) {
+            await greetingsFactory.setNames(displayName);
+            var greetings = await greetingsFactory.userInput(displayName, language);
+            var counter = await greetingsFactory.getCounter(displayName, language);
+        }
+
+        res.render("index", {
+            greet: greetings,
+            timesGreeted: counter,
+        });
+
     }
 
     async function greetedNames(req, res) {
