@@ -4,9 +4,16 @@ const bodyParser = require("body-parser");
 const exhbs = require("express-handlebars");
 const flash = require("express-flash");
 const session = require("express-session");
+const pg = require('pg');
+const Pool = pg.Pool;
+
+const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/greetingsDB';
+const pool = new Pool({
+	connectionString
+});
 
 const Routes = require("./routes-factory");
-const routes = Routes();
+const routes = Routes(pool);
 
 app.use(flash());
 

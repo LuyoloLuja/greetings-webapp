@@ -1,11 +1,5 @@
-module.exports = function Routes() {
-    const pg = require('pg');
-    const Pool = pg.Pool;
+module.exports = function Routes(pool) {
 
-    const connectionString = process.env.DATABASE_URL || 'postgresql://codex:pg123@localhost:5432/greetingsDB';
-    const pool = new Pool({
-        connectionString
-    });
     const GreetingsFactory = require("./greetings");
     const greetingsFactory = GreetingsFactory(pool);
 
